@@ -24,12 +24,12 @@
     const modalScroll = document.getElementById('modal-scroll');
     const modalClose = document.getElementById('modal-close');
 
-    // Render
-    function renderRecommendations() {
-        recommendationsList.innerHTML = recommendations.map((rec, i) => `
+    // Item templates
+    function recommendationHTML(rec, index) {
+        return `
             <div class="recommendation-item" data-id="${rec.id}">
                 <div class="recommendation-header" role="button" tabindex="0" aria-expanded="false">
-                    <span class="recommendation-number">${String(i + 1).padStart(2, '0')}</span>
+                    <span class="recommendation-number">${String(index + 1).padStart(2, '0')}</span>
                     <span class="recommendation-title">${rec.title}</span>
                     <div class="recommendation-toggle">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -40,17 +40,11 @@
                 <div class="recommendation-content">
                     <div class="recommendation-detail">${rec.content}</div>
                 </div>
-            </div>
-        `).join('');
+            </div>`;
     }
 
-    function toggleRecommendation(header) {
-        const expanded = header.parentElement.classList.toggle('expanded');
-        header.setAttribute('aria-expanded', expanded);
-    }
-
-    function renderProjects() {
-        workGrid.innerHTML = projects.map(proj => `
+    function projectCardHTML(proj) {
+        return `
             <article class="work-card" data-id="${proj.id}">
                 <div class="work-card-image">
                     <img src="${proj.image}" alt="${proj.title}" loading="lazy">
@@ -59,12 +53,11 @@
                     <h3 class="work-card-title">${proj.title}</h3>
                     <p class="work-card-description">${proj.shortDesc}</p>
                 </div>
-            </article>
-        `).join('');
+            </article>`;
     }
 
-    function renderTeamMembers() {
-        teamGrid.innerHTML = teamMembers.map(member => `
+    function memberCardHTML(member) {
+        return `
             <article class="member-card" data-id="${member.id}">
                 <div class="member-card-image">
                     <img src="${member.image}" alt="${member.name}" loading="lazy">
@@ -73,8 +66,95 @@
                     <h3 class="member-card-name">${member.name}</h3>
                     <p class="member-card-role">${member.role}</p>
                 </div>
-            </article>
-        `).join('');
+            </article>`;
+    }
+
+    // Pagination
+    const SECTIONS = {
+        recommendations: {
+            data: recommendations,
+            pageSize: 4,
+            container: recommendationsList,
+            pagination: document.getElementById('recommendations-pagination'),
+            render: recommendationHTML
+        },
+        projects: {
+            data: projects,
+            pageSize: 6,
+            container: workGrid,
+            pagination: document.getElementById('projects-pagination'),
+            render: projectCardHTML
+        },
+        members: {
+            data: teamMembers,
+            pageSize: 8,
+            container: teamGrid,
+            pagination: document.getElementById('team-pagination'),
+            render: memberCardHTML
+        }
+    };
+
+    const currentPages = { recommendations: 1, projects: 1, members: 1 };
+
+    function totalPagesOf(cfg) {
+        return Math.max(1, Math.ceil(cfg.data.length / cfg.pageSize));
+    }
+
+    function renderSection(key) {
+        const cfg = SECTIONS[key];
+        const totalPages = totalPagesOf(cfg);
+        currentPages[key] = Math.min(Math.max(currentPages[key], 1), totalPages);
+        const page = currentPages[key];
+        const start = (page - 1) * cfg.pageSize;
+        const items = cfg.data.slice(start, start + cfg.pageSize);
+
+        cfg.container.innerHTML = items
+            .map((item, i) => cfg.render(item, start + i))
+            .join('');
+
+        cfg.pagination.innerHTML = paginationHTML(key, page, totalPages);
+    }
+
+    function paginationHTML(key, page, totalPages) {
+        if (totalPages <= 1) return '';
+
+        let html = `<button class="page-btn" data-key="${key}" data-action="prev" aria-label="Previous page" ${page === 1 ? 'disabled' : ''}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            html += `<button class="page-btn${i === page ? ' active' : ''}" data-key="${key}" data-page="${i}" ${i === page ? 'aria-current="page"' : ''}>${i}</button>`;
+        }
+
+        html += `<button class="page-btn" data-key="${key}" data-action="next" aria-label="Next page" ${page === totalPages ? 'disabled' : ''}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>`;
+
+        return html;
+    }
+
+    function handlePaginationClick(e) {
+        const btn = e.target.closest('.page-btn');
+        if (!btn || btn.disabled) return;
+
+        const key = btn.dataset.key;
+        const cfg = SECTIONS[key];
+        if (!cfg) return;
+
+        if (btn.dataset.action === 'prev') currentPages[key]--;
+        else if (btn.dataset.action === 'next') currentPages[key]++;
+        else currentPages[key] = parseInt(btn.dataset.page, 10);
+
+        renderSection(key);
+
+        // Scroll back to this sub-section's heading
+        const anchor = cfg.container.previousElementSibling;
+        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleRecommendation(header) {
+        const expanded = header.parentElement.classList.toggle('expanded');
+        header.setAttribute('aria-expanded', expanded);
     }
 
     // Tabs (anchor links with smooth scroll + scroll spy)
@@ -185,6 +265,10 @@
             if (card) openModal('member', card.dataset.id);
         });
 
+        Object.keys(SECTIONS).forEach(key => {
+            SECTIONS[key].pagination.addEventListener('click', handlePaginationClick);
+        });
+
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
@@ -197,9 +281,7 @@
 
     // Initialize
     function init() {
-        renderRecommendations();
-        renderProjects();
-        renderTeamMembers();
+        Object.keys(SECTIONS).forEach(renderSection);
         setupEventListeners();
     }
 

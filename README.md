@@ -18,6 +18,20 @@ assets/images/
   members/              Member photos
 ```
 
+## Pagination
+
+Each section shows a subset per page — page size is set in `js/main.js`
+(`SECTIONS` object):
+
+| Section          | Data file                   | Items / page |
+|------------------|-----------------------------|--------------|
+| Recommendations  | `js/data/recommendations.js`| 4            |
+| Team's Work      | `js/data/projects.js`       | 6            |
+| Team Members     | `js/data/team-members.js`   | 8            |
+
+Pages appear automatically when there are more items than fit one page —
+no other changes needed when adding entries.
+
 ## How to update content
 
 **Add/edit a recommendation** — open `js/data/recommendations.js`, copy an

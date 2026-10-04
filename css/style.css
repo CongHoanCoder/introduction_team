@@ -127,6 +127,7 @@ header {
 /* Section Headers */
 .section-header {
     margin-bottom: 32px;
+    scroll-margin-top: 150px;
 }
 
 .section-header.spaced {
@@ -426,6 +427,57 @@ header {
     font-weight: 500;
 }
 
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 36px;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid var(--uol-gray-200);
+    background: var(--uol-white);
+    color: var(--uol-gray-600);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled):not(.active) {
+    border-color: var(--uol-red);
+    color: var(--uol-red);
+    background: rgba(199, 30, 58, 0.05);
+}
+
+.page-btn.active {
+    background: var(--uol-red);
+    border-color: var(--uol-red);
+    color: var(--uol-white);
+    box-shadow: 0 4px 12px rgba(199, 30, 58, 0.3);
+}
+
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-btn:focus-visible {
+    outline: 2px solid var(--uol-red);
+    outline-offset: 2px;
+}
+
 /* Modal */
 .modal-overlay {
     position: fixed;
@@ -712,6 +764,22 @@ footer {
 
     .page-section {
         scroll-margin-top: 130px;
+    }
+
+    .section-header {
+        scroll-margin-top: 120px;
+    }
+
+    .page-btn {
+        min-width: 36px;
+        height: 36px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+
+    .pagination {
+        margin-top: 28px;
+        gap: 6px;
     }
 
     .section-title {

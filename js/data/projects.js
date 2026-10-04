@@ -146,5 +146,143 @@ window.PROJECTS = [
             <h3>Publications</h3>
             <p>Nature Digital Medicine (2024), AMIA Annual Symposium (2024, 2025)</p>
         `
+    },
+    {
+        id: 'proj-7',
+        title: 'Edge AI for Precision Agriculture',
+        image: 'assets/images/projects/proj-7.jpg',
+        shortDesc: 'Low-power ML models for on-device crop health monitoring',
+        fullContent: `
+            <h3>Project Overview</h3>
+            <p>Development of energy-efficient machine learning models that run on edge devices in the field to detect crop disease, estimate irrigation needs, and guide variable-rate fertilization.</p>
+            <h3>Technical Approach</h3>
+            <ul>
+                <li>Model compression and quantization for ARM Cortex-M and RISC-V</li>
+                <li>Drone and ground-sensor image pipelines for canopy analysis</li>
+                <li>Federated updates from distributed farms without raw data sharing</li>
+                <li>Solar-powered sensor node design with LoRaWAN connectivity</li>
+            </ul>
+            <h3>Team</h3>
+            <p>Dr. Xiaoyu Liu (PI), 2 PhD students, University of Kentucky cooperative extension partner</p>
+            <h3>Status</h3>
+            <p>Field trials on 3 Kentucky farms during the 2026 growing season. Disease detection accuracy of 91% at under 2mW inference power.</p>
+            <h3>Funding</h3>
+            <p>USDA NIFA Grant ($650K), Kentucky Corn Growers Association ($75K)</p>
+        `
+    },
+    {
+        id: 'proj-8',
+        title: 'NLP for Legal Document Analysis',
+        image: 'assets/images/projects/proj-8.jpg',
+        shortDesc: 'Large language model tools for contract review and discovery',
+        fullContent: `
+            <h3>Project Overview</h3>
+            <p>Creation of a retrieval-augmented generation system that helps legal aid organizations review contracts, extract obligations, and search large document collections with citations.</p>
+            <h3>Technical Approach</h3>
+            <ul>
+                <li>Fine-tuned open-weight LLMs with retrieval-augmented generation</li>
+                <li>Legal citation grounding and hallucination detection</li>
+                <li>Document layout parsing for scanned court filings</li>
+                <li>Human-in-the-loop review interface with confidence scores</li>
+            </ul>
+            <h3>Team</h3>
+            <p>Dr. Olfa Nasraoui (PI), 3 PhD students, UofL Brandeis School of Law clinic</p>
+            <h3>Status</h3>
+            <p>Pilot with two legal aid clinics. Review time for pro-bono contracts reduced by 60% in blind evaluation.</p>
+            <h3>Publications</h3>
+            <p>ACL Findings (2025), NAACL Industry Track (2025)</p>
+        `
+    },
+    {
+        id: 'proj-9',
+        title: 'Digital Pathology Image Segmentation',
+        image: 'assets/images/projects/proj-9.jpg',
+        shortDesc: 'AI-assisted tumor detection in whole-slide pathology images',
+        fullContent: `
+            <h3>Project Overview</h3>
+            <p>Development of segmentation models that highlight regions of interest in whole-slide pathology images, supporting faster and more consistent diagnosis by pathologists.</p>
+            <h3>Technical Approach</h3>
+            <ul>
+                <li>Multi-scale transformer architectures for gigapixel slides</li>
+                <li>Weakly supervised learning from annotated slide regions</li>
+                <li>Uncertainty maps to flag cases for second review</li>
+                <li>HL7/FHIR integration for clinical workflow deployment</li>
+            </ul>
+            <h3>Team</h3>
+            <p>Dr. Hichem Frigui (PI), 2 PhD students, UofL Health Department of Pathology</p>
+            <h3>Status</h3>
+            <p>Validated on 4,200 slides; sensitivity of 96% for metastatic breast cancer detection, FDA breakthrough device designation pending.</p>
+            <h3>Funding</h3>
+            <p>NIH R01 ($1.1M), Kentucky Cabinet for Health and Family Services ($120K)</p>
+        `
+    },
+    {
+        id: 'proj-10',
+        title: 'Blockchain Supply Chain Provenance',
+        image: 'assets/images/projects/proj-10.jpg',
+        shortDesc: 'Tamper-evident tracking for pharmaceutical distribution',
+        fullContent: `
+            <h3>Project Overview</h3>
+            <p>A permissioned ledger system that records pharmaceutical shipments end-to-end, enabling rapid counterfeit detection and recall coordination across distributors.</p>
+            <h3>Technical Approach</h3>
+            <ul>
+                <li>Hyperledger Fabric network with privacy channels for competitors</li>
+                <li>Lightweight IoT gateway attestation for cold-chain sensors</li>
+                <li>Zero-knowledge proofs for confidential pricing data</li>
+                <li>Smart contract rules enforcing DSCSA compliance workflows</li>
+            </ul>
+            <h3>Team</h3>
+            <p>Dr. Mahmoud El-Gayyar (PI), 2 PhD students, 2 industry partners in regional distribution</p>
+            <h3>Status</h3>
+            <p>Live pilot tracking 15,000 shipments per month. Recall response time reduced from days to minutes.</p>
+            <h3>Impact</h3>
+            <p>Informing ANSI-standardized interoperability guidelines for healthcare supply chains.</p>
+        `
+    },
+    {
+        id: 'proj-11',
+        title: 'Intelligent Tutoring System for STEM',
+        image: 'assets/images/projects/proj-11.jpg',
+        shortDesc: 'Adaptive feedback for introductory programming courses',
+        fullContent: `
+            <h3>Project Overview</h3>
+            <p>An intelligent tutoring platform that analyzes student code and problem-solving steps in real time, delivering personalized hints without revealing final solutions.</p>
+            <h3>Technical Approach</h3>
+            <ul>
+                <li>Static analysis plus LLM-based misconception detection</li>
+                <li>Knowledge tracing models predicting skill mastery</li>
+                <li>Hint escalation strategies grounded in learning science</li>
+                <li>Instructor dashboards highlighting class-wide difficulties</li>
+            </ul>
+            <h3>Team</h3>
+            <p>Dr. Adel Elmaghraby (PI), 3 PhD students, UofL Center for Teaching &amp; Learning</p>
+            <h3>Status</h3>
+            <p>Deployed in CS 210 and CS 302. Course DFW rates dropped by 21% over two semesters.</p>
+            <h3>Funding</h3>
+            <p>NSF IUSE ($720K), Microsoft Research Gift ($50K)</p>
+        `
+    },
+    {
+        id: 'proj-12',
+        title: 'Disaster Response Drone Swarm Coordination',
+        image: 'assets/images/projects/proj-12.jpg',
+        shortDesc: 'Cooperative aerial robots for search and damage assessment',
+        fullContent: `
+            <h3>Project Overview</h3>
+            <p>Algorithms and systems for coordinating teams of drones after natural disasters to map damage, locate survivors, and maintain communication with ground crews.</p>
+            <h3>Technical Approach</h3>
+            <ul>
+                <li>Distributed task allocation without central control</li>
+                <li>Mesh radio networking resilient to infrastructure loss</li>
+                <li>Onboard thermal and visual detection of survivors</li>
+                <li>Simulation-to-reality transfer in Gazebo and hardware fleet</li>
+            </ul>
+            <h3>Team</h3>
+            <p>Dr. Dan Popa (PI), Dr. Mehmed Kantardzic (Co-PI), 4 PhD students, Louisville Metro Emergency Management</p>
+            <h3>Status</h3>
+            <p>Demonstrated 12-drone coordinated mapping exercise in March 2026. Preparing for FEMA resiliency competition.</p>
+            <h3>Funding</h3>
+            <p>NSF CNS ($950K), KY EPSCoR ($180K)</p>
+        `
     }
 ];
