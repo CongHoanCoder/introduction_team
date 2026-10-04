@@ -138,6 +138,20 @@ header {
     font-weight: 700;
     color: var(--uol-black);
     margin-bottom: 8px;
+    position: relative;
+    padding-bottom: 14px;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 48px;
+    height: 4px;
+    background: var(--uol-red);
+    border-radius: 2px;
 }
 
 .section-subtitle {
@@ -149,69 +163,152 @@ header {
 .recommendations-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 .recommendation-item {
     background: var(--uol-white);
     border: 1px solid var(--uol-gray-200);
+    border-left: 4px solid var(--uol-gray-300);
     border-radius: 12px;
     overflow: hidden;
-    transition: all 0.2s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .recommendation-item:hover {
-    border-color: var(--uol-gray-300);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-left-color: var(--uol-red);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.recommendation-item.expanded {
+    border-left-color: var(--uol-red);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+    transform: none;
 }
 
 .recommendation-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 16px;
     padding: 20px 24px;
     cursor: pointer;
     background: var(--uol-white);
+    transition: background 0.2s ease;
 }
 
-.recommendation-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--uol-black);
-    flex: 1;
+.recommendation-header:hover {
+    background: #FAFAFA;
 }
 
-.recommendation-toggle {
-    width: 24px;
-    height: 24px;
+.recommendation-header:focus-visible {
+    outline: 2px solid var(--uol-red);
+    outline-offset: -3px;
+}
+
+.recommendation-number {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(199, 30, 58, 0.08);
+    color: var(--uol-red);
+    font-size: 14px;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--uol-red);
-    transition: transform 0.2s ease;
+    transition: all 0.25s ease;
+}
+
+.recommendation-item.expanded .recommendation-number {
+    background: var(--uol-red);
+    color: var(--uol-white);
+}
+
+.recommendation-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--uol-black);
+    flex: 1;
+    line-height: 1.4;
+}
+
+.recommendation-toggle {
     flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--uol-gray-100);
+    color: var(--uol-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.recommendation-item:hover .recommendation-toggle {
+    background: rgba(199, 30, 58, 0.1);
 }
 
 .recommendation-item.expanded .recommendation-toggle {
+    background: var(--uol-red);
+    color: var(--uol-white);
     transform: rotate(180deg);
 }
 
 .recommendation-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    background: var(--uol-gray-100);
-    border-top: 1px solid var(--uol-gray-200);
+    transition: max-height 0.35s ease;
+    background: linear-gradient(180deg, var(--uol-gray-100) 0%, #EFEFEF 100%);
 }
 
 .recommendation-item.expanded .recommendation-content {
-    max-height: 800px;
-    padding: 24px;
+    max-height: 2000px;
 }
 
 .recommendation-detail {
+    padding: 26px 28px 30px 78px;
+    border-top: 1px solid var(--uol-gray-200);
     color: var(--uol-gray-800);
     line-height: 1.7;
+}
+
+.recommendation-detail h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--uol-red);
+    margin: 22px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--uol-gray-200);
+}
+
+.recommendation-detail h3:first-child {
+    margin-top: 0;
+}
+
+.recommendation-detail p {
+    color: var(--uol-gray-800);
+    line-height: 1.75;
+    margin-bottom: 12px;
+}
+
+.recommendation-detail ul {
+    padding-left: 22px;
+    margin-bottom: 8px;
+}
+
+.recommendation-detail li {
+    color: var(--uol-gray-800);
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+.recommendation-detail li::marker {
+    color: var(--uol-red);
 }
 
 /* Team's Work Cards */
@@ -619,6 +716,31 @@ footer {
 
     .section-title {
         font-size: 22px;
+    }
+
+    .recommendation-header {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .recommendation-number {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+
+    .recommendation-title {
+        font-size: 15px;
+    }
+
+    .recommendation-toggle {
+        width: 32px;
+        height: 32px;
+    }
+
+    .recommendation-detail {
+        padding: 22px 18px 26px 62px;
     }
 
     .work-grid,

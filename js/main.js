@@ -26,12 +26,13 @@
 
     // Render
     function renderRecommendations() {
-        recommendationsList.innerHTML = recommendations.map(rec => `
+        recommendationsList.innerHTML = recommendations.map((rec, i) => `
             <div class="recommendation-item" data-id="${rec.id}">
-                <div class="recommendation-header">
+                <div class="recommendation-header" role="button" tabindex="0" aria-expanded="false">
+                    <span class="recommendation-number">${String(i + 1).padStart(2, '0')}</span>
                     <span class="recommendation-title">${rec.title}</span>
                     <div class="recommendation-toggle">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </div>
@@ -41,6 +42,11 @@
                 </div>
             </div>
         `).join('');
+    }
+
+    function toggleRecommendation(header) {
+        const expanded = header.parentElement.classList.toggle('expanded');
+        header.setAttribute('aria-expanded', expanded);
     }
 
     function renderProjects() {
@@ -157,8 +163,15 @@
 
         recommendationsList.addEventListener('click', (e) => {
             const header = e.target.closest('.recommendation-header');
+            if (header) toggleRecommendation(header);
+        });
+
+        recommendationsList.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const header = e.target.closest('.recommendation-header');
             if (header) {
-                header.parentElement.classList.toggle('expanded');
+                e.preventDefault();
+                toggleRecommendation(header);
             }
         });
 
