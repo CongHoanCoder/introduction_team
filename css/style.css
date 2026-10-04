@@ -52,16 +52,9 @@ header {
 }
 
 .logo-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--uol-red);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--uol-white);
-    font-weight: 700;
-    font-size: 20px;
+    height: 56px;
+    width: auto;
+    display: block;
 }
 
 .logo-text h1 {
@@ -488,6 +481,10 @@ footer {
 @media (max-width: 768px) {
     .header-content {
         height: 70px;
+    }
+
+    .logo-icon {
+        height: 44px;
     }
 
     .logo-text h1 {
