@@ -21,8 +21,7 @@
     const workGrid = document.getElementById('work-grid');
     const teamGrid = document.getElementById('team-grid');
     const modalOverlay = document.getElementById('modal-overlay');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
+    const modalScroll = document.getElementById('modal-scroll');
     const modalClose = document.getElementById('modal-close');
 
     // Render
@@ -92,7 +91,8 @@
 
     // Modal
     function openModal(type, id) {
-        const data = type === 'project'
+        const isProject = type === 'project';
+        const data = isProject
             ? projects.find(p => p.id === id)
             : teamMembers.find(m => m.id === id);
 
@@ -100,12 +100,36 @@
 
         const label = data.title || data.name;
         const content = data.fullContent || data.bio;
-        const image = data.image
-            ? `<img src="${data.image}" alt="${label}" class="modal-image">`
-            : '';
+        const badge = isProject ? 'Project' : 'Team Member';
 
-        modalTitle.textContent = label;
-        modalBody.innerHTML = image + content;
+        let hero;
+        if (data.image && isProject) {
+            hero = `
+                <div class="modal-hero">
+                    <img src="${data.image}" alt="${label}">
+                    <div class="modal-hero-overlay">
+                        <span class="modal-badge">${badge}</span>
+                        <h2 class="modal-hero-title" id="modal-title">${label}</h2>
+                    </div>
+                </div>`;
+        } else if (data.image) {
+            hero = `
+                <div class="modal-hero modal-hero--member">
+                    <img class="modal-avatar" src="${data.image}" alt="${label}">
+                    <span class="modal-badge">${badge}</span>
+                    <h2 class="modal-hero-title" id="modal-title">${label}</h2>
+                    <p class="modal-hero-role">${data.role || ''}</p>
+                </div>`;
+        } else {
+            hero = `
+                <div class="modal-simple-header">
+                    <span class="modal-badge">${badge}</span>
+                    <h2 class="modal-hero-title" id="modal-title">${label}</h2>
+                </div>`;
+        }
+
+        modalScroll.innerHTML = hero + `<div class="modal-body">${content}</div>`;
+        modalScroll.scrollTop = 0;
         modalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
         modalClose.focus();
