@@ -566,7 +566,7 @@ header {
     background: var(--uol-gray-800);
 }
 
-.modal-hero > img {
+.modal-hero:not(.modal-hero--member) > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -843,7 +843,7 @@ footer {
         max-height: 94vh;
     }
 
-    .modal-hero {
+    .modal-hero:not(.modal-hero--member) {
         height: 200px;
     }
 
