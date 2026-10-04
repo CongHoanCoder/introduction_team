@@ -478,6 +478,19 @@ header {
     outline-offset: 2px;
 }
 
+.page-ellipsis {
+    min-width: 28px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--uol-gray-600);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 2px;
+    user-select: none;
+}
+
 /* Modal */
 .modal-overlay {
     position: fixed;
@@ -775,6 +788,12 @@ footer {
         height: 36px;
         font-size: 13px;
         border-radius: 8px;
+    }
+
+    .page-ellipsis {
+        height: 36px;
+        min-width: 22px;
+        font-size: 16px;
     }
 
     .pagination {

@@ -115,6 +115,30 @@
         cfg.pagination.innerHTML = paginationHTML(key, page, totalPages);
     }
 
+    /**
+     * Windowed page list: always shows first, last, and current ± 2,
+     * with '…' marking gaps. Small totals show every page.
+     */
+    function pageNumbers(page, totalPages) {
+        if (totalPages <= 7) {
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
+        const pages = new Set([1, totalPages]);
+        for (let i = page - 2; i <= page + 2; i++) {
+            if (i >= 1 && i <= totalPages) pages.add(i);
+        }
+        const sorted = [...pages].sort((a, b) => a - b);
+        const result = [];
+        let prev = 0;
+        for (const p of sorted) {
+            if (p - prev === 2) result.push(prev + 1);
+            else if (p - prev > 2) result.push('…');
+            result.push(p);
+            prev = p;
+        }
+        return result;
+    }
+
     function paginationHTML(key, page, totalPages) {
         if (totalPages <= 1) return '';
 
@@ -122,9 +146,13 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>`;
 
-        for (let i = 1; i <= totalPages; i++) {
-            html += `<button class="page-btn${i === page ? ' active' : ''}" data-key="${key}" data-page="${i}" ${i === page ? 'aria-current="page"' : ''}>${i}</button>`;
-        }
+        pageNumbers(page, totalPages).forEach(p => {
+            if (p === '…') {
+                html += `<span class="page-ellipsis" aria-hidden="true">&hellip;</span>`;
+            } else {
+                html += `<button class="page-btn${p === page ? ' active' : ''}" data-key="${key}" data-page="${p}" ${p === page ? 'aria-current="page"' : ''}>${p}</button>`;
+            }
+        });
 
         html += `<button class="page-btn" data-key="${key}" data-action="next" aria-label="Next page" ${page === totalPages ? 'disabled' : ''}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
